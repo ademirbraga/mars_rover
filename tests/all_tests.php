@@ -6,6 +6,7 @@ class AllTests extends TestSuite {
         $this->TestSuite('All tests for SimpleTest ' . SimpleTest::getVersion());
         $this->addFile('/direcao_test.php');
         $this->addFile('/rover_test.php');
+        $this->addFile('/plataforma_test.php');
     }
 }
 ?>

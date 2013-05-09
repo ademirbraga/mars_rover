@@ -18,15 +18,6 @@ class TestOfDirecao extends UnitTestCase{
         $this->assertTrue($this->direcao->set_posicao('x',1));
     }
 
-    function testGet_x(){
-        $this->assertNotNull($this->direcao->get_x());
-    }
-
-    function testGet_y(){
-        $direcao = new Direcao();
-        $this->assertNotNull($this->direcao->get_y());
-    }
-
     function testVirar_esquerda(){
         $this->direcao->set_direcao(NORTH);
         $this->direcao->virar_esquerda();
