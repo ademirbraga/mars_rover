@@ -85,7 +85,7 @@ if(!empty($_POST)){
     </form>
     </body>
     <script type="text/javascript">
-        var id = 1;
+        var id = <?php if (!@empty($_POST['x'])) echo @count($_POST['x']);else echo  1; ?>;
         $("#add").click(function(){
             var tr = '<tr id="tr_'+id+'">' +
                     '<td><input type="text" name="x['+id+']" id="x_'+id+'" value=""/></td>' +
