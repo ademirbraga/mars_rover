@@ -146,6 +146,11 @@ class Rover{
         return true;
     }
 
+    /**
+     * @name rota_alternativa
+     * @return bool
+     * @desc Metodo ainda nao finalizado
+     */
     function rota_alternativa(){
         $direcao_atual = $this->objDirecao->get_direcao();
         foreach($this->objDirecao->get_cardeais() as $cardeal){
