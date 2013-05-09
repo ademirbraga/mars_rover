@@ -11,7 +11,7 @@ class Direcao{
     private $direcao = null;
     private $esquerda = array(NORTH=>WEST,SOUTH=>EAST,EAST=>NORTH,WEST=>SOUTH);
     private $direita = array(NORTH=>EAST,SOUTH=>WEST,EAST=>SOUTH,WEST=>NORTH);
-    private $cardinais = array(NORTH,EAST,SOUTH,WEST);
+    private $cardinais = array(NORTH,SOUTH,EAST,WEST);
 
     function set_direcao_inicial($x=null,$y=null,$direcao=null){
         $this->x = !is_null($x) ? $x : 0;
@@ -28,6 +28,9 @@ class Direcao{
     function get_direcao(){
         return $this->direcao;
     }
+    function get_cardeais(){
+        return $this->cardinais;
+    }
 
     /**
      * @name atualizar_coordenadas
@@ -42,16 +45,16 @@ class Direcao{
             return false;
         }else{
             switch($direcao){
-                case NORTH: $this->set_posicao('y',1);break;
-                case SOUTH: $this->set_posicao('y',-1); break;
-                case EAST:  $this->set_posicao('x',1); break;
-                case WEST:  $this->set_posicao('x',-1); break;
+                case NORTH: $this->set_posicao('y',1,$direcao);break;
+                case SOUTH: $this->set_posicao('y',-1,$direcao); break;
+                case EAST:  $this->set_posicao('x',1,$direcao); break;
+                case WEST:  $this->set_posicao('x',-1,$direcao); break;
             }
             return true;
         }
     }
 
-    function set_posicao($posicao='x',$valor=0){
+    function set_posicao($posicao='x',$valor=0,$direcao){
         if(in_array($posicao,array('x','y')) && is_numeric($valor)){
             $this->$posicao += $valor;
             return true;

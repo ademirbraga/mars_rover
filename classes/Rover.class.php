@@ -1,11 +1,11 @@
 <?php
 /**
- * Um esquadrão de robôs robóticos estão a desembarcar pela NASA em um platô em Mars.This planalto, que é
- * curiosamente rectangular, deve ser navegado por therovers para que as câmeras on-board pode obter uma
+ * Um esquadrão de robôs robóticos estão a desembarcar pela NASA em um platô em Mars.Este plato, que é
+ * curiosamente rectangular, deve ser navegado pelos robos para que as câmeras on-board possam obter uma
  * visão completa do terreno circundante para enviar de volta para Terra.
 
     A localização e posição da sonda é representado por uma combinação de x e y de coordenadas e uma letra que representa
-    um dos quatro pontos cardeais cardinais. O patamar é dividido em uma grade para simplificar a navegação.
+    um dos quatro pontos cardeais cardinais. O platô é dividido em uma grade para simplificar a navegação.
     Uma posição de exemplo pode ser 0, 0, N, o que significa que o rover está no fundo
     canto esquerdo e virado para Norte.
  *
@@ -59,12 +59,23 @@ require_once('Plataforma.class.php');
 class Rover{
     public $objDirecao;
     public $objPlataforma;
+    public $rota_alternativa;
 
     function __construct(){
         $this->objDirecao = new Direcao();
         $this->objPlataforma = new Plataforma();
+        $this->rota_alternativa = true;
     }
 
+    /**
+     * @name set_posicao_rover
+     * @param int $x
+     * @param int $y
+     * @param string $direcao
+     * @return bool
+     * @throws InvalidArgumentException
+     * @desc Configura as coordenadas e direcao do rover
+     */
     function set_posicao_rover($x=0,$y=0,$direcao=NORTH){
         if(!is_numeric($x) || !is_numeric($y) || !in_array($direcao,array(NORTH,SOUTH,EAST,WEST)) || $x < 0 || $y < 0){
             throw new InvalidArgumentException("Parametros #1 e #2 devem ser numeros inteiros positivos. Parametro #3 deve ser um dos seguintes: N,S,W,E");
@@ -87,7 +98,7 @@ class Rover{
     function processa_comando($comandos='LMLMLMLMM'){
         if(!empty($comandos)){
             $comandos = str_split($comandos,1);
-            foreach($comandos as $comando){
+            foreach($comandos as $k=>$comando){
                 if($comando == 'M'){
                     $this->andar();
                 }elseif($comando == 'L'){
@@ -110,9 +121,9 @@ class Rover{
      * @name andar
      * @desc: Metodo para realizar o movimento do robo
      */
-    function andar(){
+    function andar($o=''){
+        $direcao = $this->objDirecao->get_direcao();
         if($this->verifica_proximo_movimento()){
-            $direcao = $this->objDirecao->get_direcao();
             $this->objDirecao->atualizar_coordenadas($direcao);
             return true;
         }
@@ -127,11 +138,22 @@ class Rover{
      * dimensoes da plataforma impostas pelo usuario
      */
     function verifica_proximo_movimento(){
-        if( $this->objPlataforma->excede_limite_horizontal($this->objDirecao) || $this->objPlataforma->excede_limite_vertical($this->objDirecao)){
+        if( ($this->objPlataforma->excede_limite_horizontal($this->objDirecao) || $this->objPlataforma->excede_limite_vertical($this->objDirecao)) && $this->rota_alternativa == true){
             throw new ErrorException('Com este movimento a Rover vai sair da plataforma!');
             return false;
+//            return $this->rota_alternativa();
         }
         return true;
+    }
+
+    function rota_alternativa(){
+        $direcao_atual = $this->objDirecao->get_direcao();
+        foreach($this->objDirecao->get_cardeais() as $cardeal){
+            if($direcao_atual != $cardeal){
+                $this->objDirecao->set_direcao($cardeal);
+                return $this->andar($o='vindo da rota alternativa');
+            }
+        }
     }
 
     /**
