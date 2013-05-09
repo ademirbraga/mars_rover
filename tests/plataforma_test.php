@@ -25,4 +25,8 @@ class TestOfPlataforma extends UnitTestCase{
         $this->direcao->set_direcao_inicial($x=6,$y=1,$direcao=EAST);
         $this->assertTrue($this->plataforma->excede_limite_horizontal($this->direcao));
     }
+
+    function testSet_tamanho_plataforma(){
+        $this->assertTrue($this->plataforma->set_tamanho_plataforma(3,3));
+    }
 }

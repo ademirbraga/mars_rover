@@ -28,4 +28,21 @@ class TestOfRover extends UnitTestCase{
         $this->rover->set_posicao_rover(1,2, NORTH);
         $this->assertTrue($this->rover->verifica_proximo_movimento());
     }
+
+    function testRota_alternativa(){
+        //LMLMLMLMM
+        $this->rover->set_plataforma(5,5);
+        $this->rover->set_posicao_rover(1,2, NORTH);
+
+        $direcao_atual = $this->rover->objDirecao->get_direcao();
+        print_r($this->rover->objDirecao->get_cardeais());
+
+        foreach($this->rover->objDirecao->get_cardeais() as $cardeal){
+            if($direcao_atual != $cardeal){echo "<hr>aquiiiiiiiiiiiiiiiii<hr>";
+                $this->rover->objDirecao->set_direcao($cardeal);
+                echo "<br>atual = $direcao_atual --- >nova direcao = {$this->rover->objDirecao->get_direcao()}<br>";
+                $this->assertTrue($this->rover->andar());
+            }
+        }
+    }
 }
