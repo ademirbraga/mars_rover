@@ -128,6 +128,7 @@ class Rover{
      */
     function verifica_proximo_movimento(){
         if( $this->objPlataforma->excede_limite_horizontal($this->objDirecao) || $this->objPlataforma->excede_limite_vertical($this->objDirecao)){
+            throw new ErrorException('Com este movimento a Rover vai sair da plataforma!');
             return false;
         }
         return true;
