@@ -121,7 +121,7 @@ class Rover{
      * @name andar
      * @desc: Metodo para realizar o movimento do robo
      */
-    function andar($o=''){
+    function andar(){
         $direcao = $this->objDirecao->get_direcao();
         if($this->verifica_proximo_movimento()){
             $this->objDirecao->atualizar_coordenadas($direcao);
