@@ -127,15 +127,7 @@ class Rover{
      * dimensoes da plataforma impostas pelo usuario
      */
     function verifica_proximo_movimento(){
-        if(
-            (($this->objDirecao->get_direcao() == NORTH) && (($this->objDirecao->get_y()+1) > $this->objPlataforma->get_y())) ||
-            (($this->objDirecao->get_direcao() == SOUTH) && (($this->objDirecao->get_y()-1) < 0))||
-
-            (($this->objDirecao->get_direcao() == EAST) && (($this->objDirecao->get_x()+1) > $this->objPlataforma->get_x())) ||
-            (($this->objDirecao->get_direcao() == WEST) && (($this->objDirecao->get_x()-1) < 0))
-
-            ){
-            throw new ErrorException('Com este movimento a Rover vai sair da plataforma!');
+        if( $this->objPlataforma->excede_limite_horizontal($this->objDirecao) || $this->objPlataforma->excede_limite_vertical($this->objDirecao)){
             return false;
         }
         return true;

@@ -29,6 +29,13 @@ class Direcao{
         return $this->direcao;
     }
 
+    /**
+     * @name atualizar_coordenadas
+     * @param string $direcao
+     * @return bool
+     * @throws InvalidArgumentException
+     * @desc Atualiza as coordenadas x ou x de acordo com a direcao dada
+     */
     function atualizar_coordenadas($direcao=NORTH){
         if(!in_array($direcao,$this->cardinais)){
             throw new InvalidArgumentException('Parametro deve ser um dos seguintes: N,S,W,E');
