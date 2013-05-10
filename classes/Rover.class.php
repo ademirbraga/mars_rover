@@ -60,11 +60,13 @@ class Rover{
     public $objDirecao;
     public $objPlataforma;
     public $rota_alternativa;
+    private $id;
 
-    function __construct(){
+    function __construct($id=1){
         $this->objDirecao = new Direcao();
         $this->objPlataforma = new Plataforma();
         $this->rota_alternativa = true;
+        $this->id = $id;
     }
 
     /**
@@ -139,7 +141,7 @@ class Rover{
      */
     function verifica_proximo_movimento(){
         if( ($this->objPlataforma->excede_limite_horizontal($this->objDirecao) || $this->objPlataforma->excede_limite_vertical($this->objDirecao)) && $this->rota_alternativa == true){
-            throw new ErrorException('Com este movimento a Rover vai sair da plataforma!');
+            throw new ErrorException('Com esta sequencia de movimentos a Rover ('.$this->id.') vai sair da plataforma!');
             return false;
 //            return $this->rota_alternativa();
         }
@@ -167,6 +169,6 @@ class Rover{
      * @desc Metodo para pegar a posicao atual do robo
      */
     function print_posicao(){
-        return "{$this->objDirecao->get_x()} {$this->objDirecao->get_y()} {$this->objDirecao->get_direcao()}\n";
+        return "{$this->objDirecao->get_x()} {$this->objDirecao->get_y()} {$this->objDirecao->get_direcao()}";
     }
 }
