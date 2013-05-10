@@ -27,13 +27,8 @@ class Plataforma{
      * @desc Seta as dimensoes da plataforma (horizontal e vertical)
      */
     function set_tamanho_plataforma($x,$y){
-        if(!is_numeric($x) || !is_numeric($y)){
-            throw new InvalidArgumentException("Parametros #1 e #2 para o tamanho da plataforma devem ser numeros inteiros. Parametros recebidos #1:'{$x}' e #2:'{$y}' ");
-            return false;
-        }
         $this->set_x($x);
         $this->set_y($y);
-        return true;
     }
 
     /**
