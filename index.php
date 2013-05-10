@@ -8,7 +8,7 @@ if(!empty($_POST)){
         //ENTRADA: 1 2 N
         //COMANDO: LMLMLMLMM
         //SAIDA:   1 3 N
-        $rover = new Rover();
+        $rover = new Rover($id=($k+1));
         $rover->set_plataforma($_POST['d1'],$_POST['d2']);
         $rover->set_posicao_rover($_POST['x'][$k], $_POST['y'][$k], $_POST['d'][$k]);
         $rover->processa_comando($_POST['c'][$k]);
@@ -102,11 +102,10 @@ if(!empty($_POST)){
                     '</tr>';
             $("#tbDados").append(tr);
             id++;
-            $(".int").mask("99");
-            $(".char").mask("a");
-            $(".char").blur(function(){
-                $(this).val($(this).val().toUpperCase());
-            });
+            $(".int").keypress(verificaNumero);
+            $(".char").mask('a');
+            $(".char").keypress(verificaDirecao);
+            $(".string").keypress(verificaComando);
         });
 
         function remover(id){
@@ -124,6 +123,7 @@ if(!empty($_POST)){
             }
         }
         function verificaDirecao(e){
+            $(this).val($(this).val().toUpperCase());
             if($.inArray(e.which,[119,101,110,115,78,87,69,83]) == -1){
                 $(this).val('');
                 return false;
