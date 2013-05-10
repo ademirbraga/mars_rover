@@ -74,6 +74,13 @@ class Direcao{
         }
     }
 
+    /**
+     * @name get_esquerda
+     * @param string $atual
+     * @return bool
+     * @throws InvalidArgumentException
+     * @desc Captura a direcao à esquerda da direcao atual: ex: se estiver na direcao NORTH, a direcao a esquerda sera WEST
+     */
     function get_esquerda($atual=NORTH){
         if(!in_array($atual,$this->cardinais)){
             throw new InvalidArgumentException('Parametro deve ser um dos seguintes: N,S,W,E. Parametro recebido='.$atual);
@@ -82,6 +89,14 @@ class Direcao{
             return $this->esquerda[$atual];
         }
     }
+
+    /**
+     * @name get_direita
+     * @param string $atual
+     * @return bool
+     * @throws InvalidArgumentException
+     * @desc Captura a direcao à direita da direcao atual: ex: se estiver na direcao NORTH, a direcao a direita sera EAST
+     */
     function get_direita($atual=NORTH){
         if(!in_array($atual,$this->cardinais)){
             throw new InvalidArgumentException('Parametro deve ser um dos seguintes: N,S,W,E. Parametro recebido='.$atual);
@@ -90,9 +105,19 @@ class Direcao{
             return $this->direita[$atual];
         }
     }
+
+    /**
+     * @name virar_direita
+     * @desc Metodo para mudar a direcao da rover para a direita da direcao atual
+     */
     function virar_direita(){
         $this->set_direcao($this->get_direita($this->get_direcao()));
     }
+
+    /**
+     * @name virar_esquerda
+     * @desc Metodo para mudar a direcao da rover para a esquerda da direcao atual
+     */
     function virar_esquerda(){
         $this->set_direcao($this->get_esquerda($this->get_direcao()));
     }
